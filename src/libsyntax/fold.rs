@@ -109,6 +109,7 @@ fn fold_arg_(a: arg, fld: @ast_fold) -> arg {
         ty: fld.fold_ty(&a.ty),
         pat: fld.fold_pat(a.pat),
         id: fld.new_id(a.id),
+        default: match a.default { Some(e)=>Some(fld.fold_expr(e)),None=>None }
     }
 }
 

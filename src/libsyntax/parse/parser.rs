@@ -1154,12 +1154,19 @@ impl Parser {
         };
 
         let t = self.parse_ty(false);
+        // TODO: DefaultArg
+        let default_arg= if self.eat(&token::EQ) {
+        	Some(self.parse_expr())
+        } else {
+        	None
+        };
 
         ast::arg {
             is_mutbl: is_mutbl,
             ty: t,
             pat: pat,
             id: self.get_id(),
+            default: default_arg
         }
     }
 
@@ -1186,7 +1193,8 @@ impl Parser {
             is_mutbl: is_mutbl,
             ty: t,
             pat: pat,
-            id: self.get_id()
+            id: self.get_id(),
+            default: None	// lambda would never have default arg.
         })
     }
 

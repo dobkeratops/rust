@@ -2035,6 +2035,7 @@ pub fn trans_enum_variant_or_tuple_like_struct<A:IdAndTy>(
                 codemap::dummy_sp(),
                 special_idents::arg),
             id: varg.id(),
+            default: None
         }
     };
 
