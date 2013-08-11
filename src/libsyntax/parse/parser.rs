@@ -1155,7 +1155,8 @@ impl Parser {
 
         let t = self.parse_ty(false);
         // TODO: DefaultArg
-        let default_arg= if self.eat(&token::EQ) {
+        let default_arg:ast::DefaultArg= if self.eat(&token::EQ) {
+        	self.warn("default arguments not implemented");
         	Some(self.parse_expr())
         } else {
         	None
