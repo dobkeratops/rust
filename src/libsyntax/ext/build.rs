@@ -643,7 +643,8 @@ impl AstBuilder for @ExtCtxt {
             is_mutbl: false,
             ty: ty,
             pat: arg_pat,
-            id: self.next_id()
+            id: self.next_id(),
+            default: None //TODO DefaultArg
         }
     }
 
