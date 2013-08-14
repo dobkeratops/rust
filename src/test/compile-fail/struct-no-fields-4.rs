@@ -8,28 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-trait FooTrait {
-    fn foo(&self) -> uint;
+// error-pattern: Unit-like struct construction is written with no trailing `{ }`
+struct Foo;
+
+fn h4() {
+    let _end_of_tuple = (3, Foo { });
 }
 
-struct BarStruct {
-    x: uint
-}
-
-impl FooTrait for BarStruct {
-    fn foo(&self) -> uint {
-        self.x
-    }
-}
-
-pub fn main() {
-    let foos: ~[ ~FooTrait ] = ~[
-        ~BarStruct{ x: 0 } as ~FooTrait,
-        ~BarStruct{ x: 1 } as ~FooTrait,
-        ~BarStruct{ x: 2 } as ~FooTrait
-    ];
-
-    for i in range(0u, foos.len()) {
-        assert_eq!(i, foos[i].foo());
-    }
-}
+fn main() {}

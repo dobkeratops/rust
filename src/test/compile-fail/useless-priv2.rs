@@ -1,4 +1,4 @@
-// Copyright 2012 The Rust Project Developers. See the COPYRIGHT
+// Copyright 2013 The Rust Project Developers. See the COPYRIGHT
 // file at the top-level directory of this distribution and at
 // http://rust-lang.org/COPYRIGHT.
 //
@@ -8,22 +8,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-trait Foo {
-    fn f(&self) -> int;
+pub trait E {
+    pub fn foo();               //~ ERROR: obsolete syntax
 }
+trait F { pub fn foo(); }       //~ ERROR: obsolete syntax
 
-struct Bar {
-    x: int
-}
-
-impl Foo for Bar {
-    fn f(&self) -> int {
-        self.x
-    }
-}
-
-pub fn main() {
-    let x = ~Bar { x: 10 };
-    let y = x as ~Foo;
-    assert_eq!(y.f(), 10);
+struct B;
+impl E for B {
+    priv fn foo() {}             //~ ERROR: obsolete syntax
 }
