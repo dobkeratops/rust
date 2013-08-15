@@ -975,11 +975,14 @@ pub fn xorPush(marks: &mut ~[uint], mark: uint) {
 pub fn getLast(arr: &~[Mrk]) -> uint {
     *arr.last()
 }
-trait HasDefaultArgs {
-	pub fn num_trailing_defaults(self)->uint;
+
+
+pub trait HasDefaultArgs {
+	fn num_trailing_defaults(self)->uint;
 }
+
 impl<'self> HasDefaultArgs for &'self [ast::arg] {
-	pub fn num_trailing_defaults(self)->uint {
+	fn num_trailing_defaults(self)->uint {
 		self.rev_iter().take_while( |a|{a.default.is_some()} ).len()
 	}
 }
