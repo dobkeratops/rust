@@ -1236,7 +1236,7 @@ impl Parser {
 
         let t = self.parse_ty(false);
         // TODO: DefaultArg
-        let default_arg:ast::DefaultArg= if self.eat(&token::EQ) {
+        let default_arg:ast::DefaultVal= if self.eat(&token::EQ) {
         	self.warn("default arguments not implemented");
         	Some(self.parse_expr())
         } else {
@@ -3079,11 +3079,20 @@ impl Parser {
         let name = self.parse_ident();
         self.expect(&token::COLON);
         let ty = self.parse_ty(false);
+                // TODO: DefaultArg
+        let default_val=if self.eat(&token::EQ) {
+            self.warn("default struct fields not implemented");
+            Some(self.parse_expr())
+        } else {
+            None
+        };
+        
         @spanned(lo, self.last_span.hi, ast::struct_field_ {
             kind: named_field(name, pr),
             id: self.get_id(),
             ty: ty,
             attrs: attrs,
+            default: default_val
         })
     }
 
@@ -3858,6 +3867,7 @@ impl Parser {
                     id: self.get_id(),
                     ty: p.parse_ty(false),
                     attrs: attrs,
+                    default: None
                 };
                 @spanned(lo, p.span.hi, struct_field_)
             };
@@ -3903,6 +3913,9 @@ impl Parser {
         }
 
         let a_var = self.parse_name_and_ty(vis, attrs);
+        
+
+        
         match *self.token {
             token::SEMI => {
                 self.obsolete(*self.span, ObsoleteFieldTerminator);
